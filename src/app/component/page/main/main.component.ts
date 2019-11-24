@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { BottomSheetOverviewComponent } from 'src/app/component/page/main/component/bottom-sheet-overview/bottom-sheet-overview.component';
 import { PessimisticWeather } from 'src/app/interface/pessimistic-weather';
 import { ApiService } from 'src/app/service/api.service';
-import { HttpService } from 'src/app/service/http.service';
 import { UtilService } from 'src/app/service/util.service';
 
 @Component({
@@ -17,8 +18,8 @@ export class MainComponent implements OnInit {
   public dataSource: Array<{}>            = [];
 
   constructor(
+    private _bottomSheet: MatBottomSheet,
     private apiService: ApiService,
-    private httpService: HttpService,
     private utilService: UtilService,
   ) { }
 
@@ -34,7 +35,8 @@ export class MainComponent implements OnInit {
       await this.attachSpinner();
       await this.getWeather();
     } catch (error) {
-      this.httpService.handleError(error);
+      console.log(error);
+      this._bottomSheet.open(BottomSheetOverviewComponent);
     } finally {
       await this.detach();
     }

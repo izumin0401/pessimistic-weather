@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import {
+  MatBottomSheetModule,
+  MatListModule,
   MatProgressSpinnerModule,
   MatSpinner,
   MatTableModule,
@@ -9,6 +11,8 @@ import {
 @NgModule({
   declarations: [],
   imports: [
+    MatBottomSheetModule,
+    MatListModule,
     MatProgressSpinnerModule,
     MatTableModule,
     MatTabsModule,
@@ -17,6 +21,8 @@ import {
     MatSpinner,
   ],
   exports: [
+    MatBottomSheetModule,
+    MatListModule,
     MatProgressSpinnerModule,
     MatTableModule,
     MatTabsModule,
