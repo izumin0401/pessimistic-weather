@@ -1,31 +1,66 @@
 <h1 class="header">悲観的な天気予報</h1>
 
 <mat-tab-group mat-align-tabs="center">
-  <mat-tab label="悲観的">
-  </mat-tab>
-  <mat-tab label="普通">
+  <mat-tab label="通常">
     <div class="container mat-elevation-z8">
       <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="time">
           <th mat-header-cell *matHeaderCellDef>時刻</th>
-          <td mat-cell *matCellDef="let element">{{element.time}}</td>
+          <td mat-cell *matCellDef="let element">{{ element.time | time }}</td>
         </ng-container>
         <ng-container matColumnDef="temp">
           <th mat-header-cell *matHeaderCellDef>気温</th>
-          <td mat-cell *matCellDef="let element">{{element.temp}}</td>
+          <td mat-cell *matCellDef="let element">{{ element.temp | temp }}</td>
         </ng-container>
         <ng-container matColumnDef="clouds">
           <th mat-header-cell *matHeaderCellDef>曇り度</th>
-          <td mat-cell *matCellDef="let element"> {{element.clouds}} </td>
+          <td mat-cell *matCellDef="let element"> {{ element.clouds | clouds }} </td>
         </ng-container>
         <ng-container matColumnDef="icon">
           <th mat-header-cell *matHeaderCellDef>天気</th>
-          <td mat-cell *matCellDef="let element">{{element.icon}}</td>
+          <td mat-cell *matCellDef="let element">
+            <img src="{{ element.icon }}">
+          </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
+  </mat-tab>
+  <mat-tab label="悲観">
+    <div class="container mat-elevation-z8">
+      <table mat-table [dataSource]="pessimisticDataSource">
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef>時刻</th>
+          <td mat-cell *matCellDef="let element">{{ element.time | time }}</td>
+        </ng-container>
+        <ng-container matColumnDef="temp">
+          <th mat-header-cell *matHeaderCellDef>気温</th>
+          <td mat-cell *matCellDef="let element">{{ element.temp | temp }}</td>
+        </ng-container>
+        <ng-container matColumnDef="clouds">
+          <th mat-header-cell *matHeaderCellDef>曇り度</th>
+          <td mat-cell *matCellDef="let element"> {{ element.clouds | clouds }} </td>
+        </ng-container>
+        <ng-container matColumnDef="icon">
+          <th mat-header-cell *matHeaderCellDef>天気</th>
+          <td mat-cell *matCellDef="let element">
+            <img src="{{ element.icon }}">
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </mat-tab>
+  <mat-tab label="ルール">
+    <ul>
+      <li>天気予報は「東京の天気」を表示する</li>
+      <li>天気予報は「5日分3時間毎」表示する</li>
+      <li>「通常タブ」は通常の天気予報を表示する</li>
+      <li>「悲観タブ」は悲観的な天気予報を表示する</li>
+      <li>「悲観タブ」では、曇り度が20%以上の場合、雨とする(降水確率取得できなかったのでやむを得ず)</li>
+    </ul>
   </mat-tab>
 </mat-tab-group>
 

@@ -12,8 +12,9 @@ import { UtilService } from 'src/app/service/util.service';
 })
 export class MainComponent implements OnInit {
 
-  public displayedColumns = ['time', 'temp', 'clouds', 'icon'];
-  public dataSource: Array<{}> = [];
+  public displayedColumns                 = ['time', 'temp', 'clouds', 'icon'];
+  public pessimisticDataSource: Array<{}> = [];
+  public dataSource: Array<{}>            = [];
 
   constructor(
     private apiService: ApiService,
@@ -56,7 +57,8 @@ export class MainComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.apiService.getWeather().subscribe(
         (response: PessimisticWeather) => {
-          this.dataSource = this.fetchDataSource(response.list);
+          this.pessimisticDataSource = this.fetchPessimisticDataSource(response.list);
+          this.dataSource            = this.fetchDataSource(response.list);
           resolve();
         },
         (error: HttpErrorResponse) => {
@@ -64,6 +66,31 @@ export class MainComponent implements OnInit {
         }
       );
     });
+  }
+
+  /**
+   * 画面表示用にデータを成形・取得する
+   * ※MatTableに合わせた形とする
+   *
+   * NOTE: 悲観的なため、曇り度が20%以上の場合は雨とする(無条件でNight iconとする)
+   *
+   * @param list 天気予報リスト
+   * @return 画面表示用に成形されたデータ
+   */
+  private fetchPessimisticDataSource(list: []): Array<{}> {
+    const pessimisticDataSource = [];
+
+    for (const key of Object.keys(list)) {
+      const obj = {};
+      obj['time']   = list[key].dt_txt;
+      obj['temp']   = list[key].main.temp;
+      obj['clouds'] = list[key].clouds.all;
+      obj['icon']   = list[key].clouds.all > 20 ? 'assets/img/10n.png' : 'assets/img/' + list[key].weather[0].icon + '.png';
+
+      pessimisticDataSource.push(obj);
+    }
+
+    return pessimisticDataSource;
   }
 
   /**
@@ -81,7 +108,7 @@ export class MainComponent implements OnInit {
       obj['time']   = list[key].dt_txt;
       obj['temp']   = list[key].main.temp;
       obj['clouds'] = list[key].clouds.all;
-      obj['icon']   = list[key].weather[0].icon;
+      obj['icon']   = 'assets/img/' + list[key].weather[0].icon + '.png';
 
       dataSource.push(obj);
     }
