@@ -2,13 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>PessimisticWeather</title>
+  <title>悲観的な天気予報</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <style>
+      app-root {
+        align-items: center;
+        color: #9B9B9B;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        justify-content: center;
+      }
+
+      .loader {
+        animation: spin 2s linear infinite;
+        border: 16px solid #FFFFFF;
+        border-radius: 50%;
+        border-top: 16px solid orange;
+        height: 120px;
+        width: 120px;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .loader-text {
+        display: block;
+        margin-top: 1em;
+      }
+    </style>
+    <div class="loader"></div>
+    <span class="loader-text">Loading...</span>
+  </app-root>
 </body>
 </html>
