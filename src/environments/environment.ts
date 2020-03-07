@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   weather: {
     url: 'https://api.openweathermap.org/data/2.5/forecast?',
-    apiKey: '5ce35b6f5fe0a25df41574ea5a9ebed9',
+    apiKey: '',
   },
 };
 
